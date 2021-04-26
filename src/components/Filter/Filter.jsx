@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import comboDispatchFunc from "../../redux/contacts/contactsActions";
 import styles from "./Filter.module.css";
+import { filterContact } from "../../redux/contacts/contactsActions";
+import { getFilter } from "../../redux/contacts/contactsSelectors";
+// import comboDispatchFunc from "../../redux/contacts/contactsActions";
 
 const Filter = ({ filter, filterContact }) => {
   // console.log(filter);
@@ -29,13 +31,13 @@ const mapStateToProps = ({ filter }) => {
   return (
     console.log(filter),
     {
-      filter: filter,
+      filter: getFilter(filter),
     }
   );
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  filterContact: (event) => dispatch(comboDispatchFunc.filterContact(event)),
+  filterContact: (event) => dispatch(filterContact(event)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

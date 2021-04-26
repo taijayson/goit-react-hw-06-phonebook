@@ -1,10 +1,12 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import contactActions from "../../redux/contacts/contactsActions";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 import styles from "./ContactForm.module.css";
-import comboDispatchFunc from "../../redux/contacts/contactsActions";
+import contactOperations from "../../redux/contacts/contactsOperations";
+import { getAllContacts } from "../../redux/contacts/contactsSelectors";
+// import { v4 as uuidv4 } from "uuid";
+// import contactActions from "../../redux/contacts/contactsActions";
+// import comboDispatchFunc from "../../redux/contacts/contactsActions";
 
 class ContactForm extends Component {
   state = {
@@ -12,21 +14,21 @@ class ContactForm extends Component {
     number: "",
   };
 
-  componentDidMount() {
-    try {
-      const contacts = JSON.parse(localStorage.getItem("contacts"));
-      if (contacts) {
-        this.props.dbUploadContacts(contacts);
-      }
-    } catch (error) {}
-  }
+  // componentDidMount() {
+  //   try {
+  //     const contacts = JSON.parse(localStorage.getItem("contacts"));
+  //     if (contacts) {
+  //       this.props.dbUploadContacts(contacts);
+  //     }
+  //   } catch (error) {}
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.contacts !== prevProps.contacts) {
-      localStorage.setItem("contacts", JSON.stringify(this.props.contacts));
-    }
-    console.log(prevProps);
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.contacts !== prevProps.contacts) {
+  //     localStorage.setItem("contacts", JSON.stringify(this.props.contacts));
+  //   }
+  //   console.log(prevProps);
+  // }
 
   handleChange = (event) => {
     const { name, value } = event.currentTarget;
@@ -41,7 +43,6 @@ class ContactForm extends Component {
 
     const checkContact = (name) => {
       const { contacts } = this.props;
-      // const normalizeName = name.toLowerCase();
       return contacts.some(
         (contact) => contact.name.toLowerCase() === name.toLowerCase()
       );
@@ -106,13 +107,13 @@ ContactForm.propTypes = {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    contacts: state.contacts,
+    contacts: getAllContacts(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dbUploadContacts: (contacts) =>
-    dispatch(comboDispatchFunc.uploadContacts(contacts)),
+  // dbUploadContacts: (contacts) =>
+  //   dispatch(comboDispatchFunc.uploadContacts(contacts)),
   onSubmit: (contact) => dispatch(comboDispatchFunc.addContact(contact)),
 });
 

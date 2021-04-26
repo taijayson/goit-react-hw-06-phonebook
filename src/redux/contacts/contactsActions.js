@@ -1,65 +1,61 @@
 // import { db } from "../../db/request";
-import {
-  UPLOADCONTACTS,
-  ADDCONTACT,
-  FILTERCONTACT,
-  DELETECONTACT,
-} from "./contactsConstanse";
+// import {
+//   UPLOADCONTACTS,
+//   ADDCONTACT,
+//   FILTERCONTACT,
+//   DELETECONTACT,
+// } from "./contactsConstanse";
+// import { v4 as uuidv4 } from "uuid";
 
-import { combineReducers, createAction } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
+// export const uploadContacts = createAction(UPLOADCONTACTS);
 
-// const uploadContacts = (contacts) => ({
-//   type: UPLOADCONTACTS,
-//   payload: contacts,
-// });
+// export const addContact = createAction(ADDCONTACT, ({ name, number }) => ({
+//   payload: {
+//     name,
+//     number,
+//     id: uuidv4(),
+//   },
+// }));
 
-export const uploadContacts = createAction(UPLOADCONTACTS);
+// export const filterContact = createAction(FILTERCONTACT, (event) => ({
+//   payload: event.target.value,
+// }));
 
-// const addContact = (contact) => {
-//   return {
-//     type: ADDCONTACT,
-//     payload: {
-//       id: contact.id,
-//       name: contact.name,
-//       number: contact.number,
-//     },
-//   };
+// export const deleteContact = createAction(DELETECONTACT);
+
+// const comboDispatchFunc = {
+//   uploadContacts,
+//   addContact,
+//   filterContact,
+//   deleteContact,
 // };
+// export default comboDispatchFunc;
 
-export const addContact = createAction(ADDCONTACT, ({ name, number }) => ({
-  payload: {
-    name,
-    number,
-    id: uuidv4(),
-  },
-}));
+import { createAction } from "@reduxjs/toolkit";
 
-// const filterContact = (value) => {
-//   return {
-//     type: FILTERCONTACT,
-//     payload: value,
-//   };
-// };
+const loadContactsRequest = createAction("contacts/loadContactsRequest");
+const loadContactsSuccess = createAction("contacts/loadContactsSuccess");
+const loadContactsError = createAction("contacts/loadContactsError");
 
-export const filterContact = createAction(FILTERCONTACT, (event) => ({
-  payload: event.target.value,
-}));
+const addContactRequest = createAction("contacts/addContactRequest");
+const addContactSuccess = createAction("contacts/addContactSuccess");
+const addContactError = createAction("contacts/addContactError");
 
-// const deleteContact = (id) => {
-//   return {
-//     type: DELETECONTACT,
-//     payload: id,
-//   };
-// };
+const deleteContactRequest = createAction("contacts/deleteContactRequest");
+const deleteContactSuccess = createAction("contacts/deleteContactSuccess");
+const deleteContactError = createAction("contacts/deleteContactError");
 
-export const deleteContact = createAction(DELETECONTACT);
+const filterContact = createAction("contact/filter");
 
-const comboDispatchFunc = {
-  uploadContacts,
-  addContact,
+export {
+  loadContactsRequest,
+  loadContactsSuccess,
+  loadContactsError,
+  addContactRequest,
+  addContactSuccess,
+  addContactError,
+  deleteContactRequest,
+  deleteContactSuccess,
+  deleteContactError,
   filterContact,
-  deleteContact,
 };
-
-export default comboDispatchFunc;

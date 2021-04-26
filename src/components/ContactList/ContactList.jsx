@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import contactActions from "../../redux/contacts/contactsActions";
+// import contactActions from "../../redux/contacts/contactsActions";
 import styles from "./ContactList.module.css";
 
 const ContactList = ({ contacts, onRemoveContact, uploadContacts }) => {
