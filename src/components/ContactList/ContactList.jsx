@@ -1,66 +1,55 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-// import contactActions from "../../redux/contacts/contactsActions";
 import styles from "./ContactList.module.css";
+import contactOperations from "../../redux/contacts/contactsOperations";
+import {
+  getLoading,
+  getFilteredContacts,
+} from "../../redux/contacts/contactsSelectors";
 
-const ContactList = ({ contacts, onRemoveContact, uploadContacts }) => {
-  console.log(contacts);
-  return (
-    <ul className={styles.list}>
-      {contacts.map(({ name, id, number }) => {
-        return (
-          <li className={styles.item} key={id}>
-            {name + " : " + number}
-            <button
-              className={styles.delete_btn}
-              onClick={() => onRemoveContact(id)}
-            >
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
+class ContactList extends Component {
+  state = {};
 
-// const mapStateToProps = (state) => {
-//   const { contacts, filter } = state.contacts;
-//   const normalizeFilter = filter.toLowerCase();
-//   const getFilteredContacts = contacts.filter((contact) =>
-//     contact.name.toLowerCase().includes(normalizeFilter)
-//   );
-//   return {
-//     contacts: getFilteredContacts,
-//   };
-// };
-// const mapStateToProps = ({ contacts, filter }) => {
-//   const normalizeFilter = filter.toLowerCase();
-//   const getFilteredContacts = contacts.filter((contact) =>
-//     contact.name.toLowerCase().includes(normalizeFilter)
-//   );
-//   return {
-//     contacts: getFilteredContacts,
-//   };
-//////==|or|==///////
-// return {
-//   contacts: contacts.filter((contact) =>
-//     contact.name.toLowerCase().includes(filter.toLowerCase())
-//   ),
-// };
-// };
-// };
+  componentDidMount() {
+    this.props.getContacts();
+  }
 
-const mapStateToProps = ({ contacts, filter }) => ({
-  contacts: contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  ),
+  render() {
+    return (
+      <>
+        {this.props.loading && <h1>...</h1>}
+        <ul>
+          {this.props.contacts.length > 0 &&
+            this.props.contacts.map(({ contactId, name, number }) => (
+              <li key={contactId}>
+                {name}: {number}
+                <button
+                  className={styles.deletebtn}
+                  onClick={() => this.props.onRemoveContact(contactId)}
+                >
+                  del
+                </button>
+              </li>
+            ))}
+        </ul>
+      </>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  contacts: getFilteredContacts(state),
+  loading: getLoading(state),
+  //   contacts.filter((contact) =>
+  // contact.name.toLowerCase().includes(filter.toLowerCase())
+  // ),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onRemoveContact: (contactId) =>
-    dispatch(contactActions.deleteContact(contactId)),
+    dispatch(contactOperations.deleteContact(contactId)),
+  getContacts: () => dispatch(contactOperations.uploadContacts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
@@ -75,3 +64,26 @@ ContactList.propTypes = {
     })
   ),
 };
+// import contactActions from "../../redux/contacts/contactsActions";
+
+// const ContactList = ({ contacts, onRemoveContact, uploadContacts }) => {
+//   console.log(contacts);
+
+//   return (
+//     <ul className={styles.list}>
+//       {contacts.map(({ name, id, number }) => {
+//         return (
+//           <li className={styles.item} key={id}>
+//             {name + " : " + number}
+//             <button
+//               className={styles.delete_btn}
+//               onClick={() => onRemoveContact(id)}
+//             >
+//               Delete
+//             </button>
+//           </li>
+//         );
+//       })}
+//     </ul>
+//   );
+// };
