@@ -27,7 +27,8 @@
     "eject": "react-scripts eject",
     "apiserver": "json-server --port 4040 --delay 500 --watch db.json",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "clean": "gh-pages-clean"
   },
   "eslintConfig": {
     "extends": [
