@@ -15,14 +15,14 @@ import {
   filterContact,
 } from "./contactsActions";
 
-const contactsReducer = createReducer([], {
+const contacts = createReducer([], {
   [loadContactsSuccess]: (state, { payload }) => payload,
   [addContactSuccess]: (state, { payload }) => [...state, payload],
   [deleteContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
 });
 
-const loadingReducer = createReducer(false, {
+const loading = createReducer(false, {
   [loadContactsSuccess]: () => false,
   [loadContactsRequest]: () => true,
   [loadContactsError]: () => false,
@@ -34,15 +34,17 @@ const loadingReducer = createReducer(false, {
   [deleteContactError]: () => false,
 });
 
-const filterReducer = createReducer("", {
+const filter = createReducer("", {
   [filterContact]: (state, { payload }) => payload,
 });
 
-export default combineReducers({
-  contactsReducer,
-  loadingReducer,
-  filterReducer,
+const contactsReducer = combineReducers({
+  contacts,
+  loading,
+  filter,
 });
+
+export default contactsReducer;
 
 // import {
 //   addContact,
