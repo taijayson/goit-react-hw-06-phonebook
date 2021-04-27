@@ -23,7 +23,7 @@ const Filter = ({ filter, filterContact }) => {
 };
 
 Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
+  filter: PropTypes.string,
   filterContact: PropTypes.func.isRequired,
 };
 

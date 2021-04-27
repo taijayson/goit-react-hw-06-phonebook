@@ -21,12 +21,12 @@ class ContactList extends Component {
         {this.props.loading && <h1>...</h1>}
         <ul>
           {this.props.contacts.length > 0 &&
-            this.props.contacts.map(({ contactId, name, number }) => (
-              <li key={contactId}>
+            this.props.contacts.map(({ id, name, number }) => (
+              <li key={id}>
                 {name}: {number}
                 <button
                   className={styles.deletebtn}
-                  onClick={() => this.props.onRemoveContact(contactId)}
+                  onClick={() => this.props.onRemoveContact(id)}
                 >
                   del
                 </button>
@@ -58,7 +58,7 @@ ContactList.propTypes = {
   onRemoveContact: PropTypes.func.isRequired,
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
     })
